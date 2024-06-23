@@ -16,4 +16,6 @@ class Solution:
         return cur if nums[cur] == target else -1
     
 sol = Solution()
-res = sol.search([-1,0,3,5,9,12], 2)
+res = sol.search([-1,0,3,5,9,12], 12)
+
+print(res)
