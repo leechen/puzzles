@@ -1,4 +1,4 @@
-public class Solution {
+public class TopKFrequentSolution {
         public IList<int> TopKFrequent(int[] nums, int k)
         {
             int len = nums.Length;
