@@ -1,4 +1,4 @@
-public class Solution {
+public class MaxAreaOfIslandSolution {
     public int MaxAreaOfIsland(int[][] grid) {
         if (grid == null || grid.Length == 0) { return 0; }
         if (grid[0].Length == 0) { return 0; }

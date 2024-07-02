@@ -1,4 +1,4 @@
-public class Solution {
+public class ProductExceptSelfSolution {
     public int[] ProductExceptSelf(int[] nums) {
             int n = nums.Length;
             int[] res = new int[n];

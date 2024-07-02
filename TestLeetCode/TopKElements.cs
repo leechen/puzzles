@@ -2,14 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-internal class Program
-{
-    private static void Main(string[] args)
-    {
-        var solution = new TopKFrequentSolution();
-        solution.TopKFrequent([1,2,3,3,4,4,4,5], 2);
-    }
-}
 
 public class TopKFrequentSolution
 {

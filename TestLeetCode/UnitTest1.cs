@@ -50,11 +50,20 @@ public class UnitTest1
     [Fact]
     public void TestMaze()
     {
+        var solution = new TopKFrequentSolution();
+        solution.TopKFrequent([1,2,3,3,4,4,4,5], 2);
+
         var sol = new MazeSolution();
         var maze = new int[6,6];
         IList<Cordinate> path;
         var result = sol.HasPath(maze, out path);
         Assert.True(path.Any());
+    }
 
+    [Fact]
+    public void TestTopK()
+    {
+        var solution = new TopKFrequentSolution();
+        solution.TopKFrequent([1,2,3,3,4,4,4,5], 2);
     }
 }

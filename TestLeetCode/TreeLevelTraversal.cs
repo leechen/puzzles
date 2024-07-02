@@ -12,7 +12,7 @@
  *     }
  * }
  */
-public class Solution {
+public class LevelOrderSolution {
     public IList<IList<int>> LevelOrder(TreeNode root) {
 
         var res = new List<IList<int>>();

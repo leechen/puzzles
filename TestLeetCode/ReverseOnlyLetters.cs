@@ -1,12 +1,3 @@
-internal class Program
-{
-    private static void Main(string[] args)
-    {
-        var solution = new ReverseOnlyLettersSolution();
-        solution.ReverseOnlyLetters("7_28]");
-    }
-}
-
 public class ReverseOnlyLettersSolution {
 
 
