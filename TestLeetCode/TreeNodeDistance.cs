@@ -10,10 +10,6 @@
  * }
  */
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 namespace lintcode
 {
     class Solution {
@@ -55,7 +51,7 @@ namespace lintcode
             if (left != null && right != null) {
                 return root;
             }
-            return left == null ? right : left;
+            return left ?? right;
         }
     }
 }
