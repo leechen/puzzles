@@ -60,8 +60,20 @@ public class UnitTest1
     [Fact]
     public void TestTopK()
     {
+        var dict = new Dictionary<char, int>();
+        dict['a'] = 1;
+        dict['b']++;
+
         var solution = new TopKFrequentSolution();
         var res = solution.TopKFrequent([1,2,3,3,4,4,4,5], 2);
         Assert.True(res.Count == 2);
+    }
+
+    [Fact]
+    public void TestDictionary()
+    {
+        var dict = new Dictionary<char, int>();
+        dict['a'] = 1;
+        dict['b']++;
     }
 }
