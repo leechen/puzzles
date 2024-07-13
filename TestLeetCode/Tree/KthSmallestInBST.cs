@@ -17,4 +17,32 @@ public class KthSmallestSolution {
             return KthSmallest(root.right, k);
         }
     }
+
+    public int KthSmallestIter(TreeNode root, int k) {
+        var stack = new Stack<TreeNode>();
+        var current = root;
+        int count = 0;
+
+        while (current != null || stack.Count > 0) {
+            // Go to the leftmost node
+            while (current != null) {
+                stack.Push(current);
+                current = current.left;
+            }
+            
+            // Visit the node
+            current = stack.Pop();
+            count++;
+            
+            // If we've visited k nodes, return the value of the current node
+            if (count == k) {
+                return current.val;
+            }
+            
+            // Go to the right node
+            current = current.right;
+        }
+        
+        return -1; // This return statement should never be reached if k is valid
+    }
 }

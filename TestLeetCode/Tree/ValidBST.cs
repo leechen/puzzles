@@ -31,16 +31,16 @@ public class IsValidBSTSolution {
             return true;
         }
 
-        return Dfs(root.left, Int64.MinValue, root.val) && Dfs(root.right, root.val, Int64.MaxValue);
+        return IsValid(root.left, Int64.MinValue, root.val) && IsValid(root.right, root.val, Int64.MaxValue);
     }
 
     // Here we use long instead of int for max/min, because the corner case of Int32.MinValue and Int32.MaxValue as the 
     // possible tree node value
-    private bool Dfs(TreeNode root, long min, long max) {
+    private bool IsValid(TreeNode root, long min, long max) {
         if (root == null) { return true; }
         if (root.val <= min || root.val >= max) { return false; }
 
-        return Dfs(root.left, min, Math.Min(root.val, max)) 
-        && Dfs(root.right, Math.Max(root.val, min),  max);
+        return IsValid(root.left, min, Math.Min(root.val, max)) 
+        && IsValid(root.right, Math.Max(root.val, min),  max);
     }
 }
