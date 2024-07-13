@@ -18,15 +18,15 @@ public class GoodNodesSolution {
         if (root == null) { return 0; }
 
         int pathMax = root.val;
-        return 1 + Dfs(root.left, pathMax) + Dfs(root.right, pathMax);
+        return 1 + countGoodNodes(root.left, pathMax) + countGoodNodes(root.right, pathMax);
     }
 
-    private int Dfs(TreeNode root, int pathMax) {
+    private int countGoodNodes(TreeNode root, int pathMax) {
         if (root == null) { return 0; }
 
         if (root.val >= pathMax) {
-            return 1 + Dfs(root.left, root.val) + Dfs(root.right, root.val);
+            return 1 + countGoodNodes(root.left, root.val) + countGoodNodes(root.right, root.val);
         }
-        return Dfs(root.left, pathMax) + Dfs(root.right, pathMax);    
+        return countGoodNodes(root.left, pathMax) + countGoodNodes(root.right, pathMax);    
     }
 }

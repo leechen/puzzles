@@ -1,22 +1,16 @@
 public class LowestCommonAncestorSolution {
-    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) {
-            return null;
-        }
-
-        if (root.val == p.val || root.val == q.val) {
+    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+    {
+        if (root == null) { return null; }
+        if (root == p || root == q) { return root; }
+        
+        var left = LowestCommonAncestor(root.left, p, q);
+        var right = LowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null)
+        {
             return root;
         }
         
-        // since p and q are NOT guranteed to be in order, so need to consider both conditions
-        if ((root.val > p.val && root.val < q.val) 
-            || (root.val < p.val && root.val > q.val)) {
-                return root;
-        }
-
-        if (root.val > p.val && root.val > q.val) {
-            return LowestCommonAncestor(root.left, p, q);
-        }
-        return  LowestCommonAncestor(root.right, p, q);
+        return left == null ? right : left;
     }
 }
