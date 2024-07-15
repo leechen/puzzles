@@ -25,12 +25,31 @@ public class CanFinishCoursesSolution {
         var visited = new HashSet<int>();
         var canComplete = new HashSet<int>();
 
+        bool hasCycle(int course)
+        {
+            if (canComplete.Contains(course)) { return false; } 
+            // if we visit a visited node again, then loop exist
+            if (visited.Contains(course)) { return true; }
+
+            visited.Add(course);
+
+            if (reqMap.ContainsKey(course))
+            {
+                foreach(var dep in reqMap[course])
+                {
+                    if (hasCycle(dep)) { return true; }
+                }
+            }
+            visited.Remove(course);
+            return false;
+        }
+
         // Step 2: go over all node and check for loops.
         // If no loop, add to canComplete set.
         // Else, just return false.
         for (int course=0; course<numCourses; course++)
         {
-            if (hasCycle(course, reqMap, visited, canComplete))
+            if (hasCycle(course))
             {
                 return false;
             }
@@ -40,24 +59,5 @@ public class CanFinishCoursesSolution {
             }
         }
         return true;
-    }
-
-    bool hasCycle(int course, Dictionary<int, IList<int>> dependencyMap, HashSet<int> visited, HashSet<int> canComplete)
-    {
-        if (canComplete.Contains(course)) { return false; } 
-        // if we visit a visited node again, then loop exist
-        if (visited.Contains(course)) { return true; }
-
-        visited.Add(course);
-
-        if (dependencyMap.ContainsKey(course))
-        {
-            foreach(var dep in dependencyMap[course])
-            {
-                if (hasCycle(dep, dependencyMap, visited, canComplete)) { return true; }
-            }
-        }
-        visited.Remove(course);
-        return false;
     }
 }
