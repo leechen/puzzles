@@ -1,3 +1,11 @@
+// https://leetcode.com/problems/3sum/description/
+/*
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, 
+and j != k, and nums[i] + nums[j] + nums[k] == 0.
+Notice that the solution set must not contain duplicate triplets.
+
+https://www.youtube.com/watch?v=jzZsG8n2R9A
+*/
 
 public class ThreeSumSolution {
     public IList<IList<int>> ThreeSum(int[] nums) {
