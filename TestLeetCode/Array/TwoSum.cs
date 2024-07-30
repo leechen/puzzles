@@ -1,26 +1,18 @@
+// https://leetcode.com/problems/two-sum/description/
+
   namespace TestLeetCode;
   public class TwoSumSolution{
 
    public static int[] TwoSum(int[] nums, int target) {
-        var dict = new Dictionary<int, int>();
+        Dictionary<int, int> indices = new Dictionary<int, int>();
 
-        var result = new int[2];
-                
-        for (int i=0; i<nums.Length; i++)
-        {
-            int key = target - nums[i];
-            if (dict.ContainsKey(key))
-            {
-                result[0] = i;
-                result[1] = dict[key];
+        for (int i = 0; i < nums.Length; i++) {
+            var diff = target - nums[i];
+            if (indices.ContainsKey(diff)) {
+                return new int[] {indices[diff], i};
             }
-            
-            if (!dict.ContainsKey(nums[i]))
-            {
-                dict.Add(nums[i], i);
-            }
+            indices[nums[i]] = i;
         }
-
-        return result;
+        return null;
     }
-} 
+}

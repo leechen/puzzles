@@ -1,7 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+/**************************************************************
+https://leetcode.com/problems/top-k-frequent-elements/description/
+https://www.youtube.com/watch?v=YPTqKIgVk-k
 
+hint: bucket
+**************************************************************/
 
 public class TopKFrequentSolution
 {
@@ -15,15 +17,15 @@ public class TopKFrequentSolution
         }
 
         Dictionary<int, int> counts = new Dictionary<int, int>();
-        foreach (int n in nums)
+        foreach (int num in nums)
         {
-            if (counts.ContainsKey(n))
+            if (counts.ContainsKey(num))
             {
-                counts[n]++;
+                counts[num]++;
             }
             else
             {
-                counts[n] = 1;
+                counts[num] = 1;
             }
         }
 
@@ -33,11 +35,13 @@ public class TopKFrequentSolution
         }
 
         List<int> res = new List<int>();
+        // Count is natually sorted already, so going from 
+        // highest count to lowest
         for (int i = length; i > 0; i--)
         {
-            foreach (int v in freq[i])
+            foreach (int num in freq[i])
             {
-                res.Add(v);
+                res.Add(num);
                 if (res.Count == k)
                 {
                     return res;
