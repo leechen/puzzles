@@ -1,43 +1,32 @@
-using System.Text;
+// https://leetcode.com/problems/generate-parentheses/description/
+// can be viewed as backtrack or stack but it is essentially DFS
 
 public class GenerateParenthesisSolution {
     public IList<string> GenerateParenthesis(int n) {
-        var res = new List<string>();
-        var acc = new StringBuilder();
-        int open = 0;
-        int close = 0;
+        var result = new List<string>();
+        var seq = new StringBuilder();
         
-        dfs(open, close);
-
-        return res;
-
-        // Inner function can capture scope outside this function, very useful to 
-        // make the code concise.
-        void dfs(int open, int close) {
-            if (open == n && close == n) {
-                res.Add(acc.ToString());
+        void Dfs(int open, int close) {
+            if(seq.Length == n * 2) {
+                result.Add(seq.ToString());
                 return;
+            } 
+            
+            if(open < n) {
+                seq.Append("(");
+                Dfs(open + 1, close);
+                seq.Length -= 1;
             }
-
-            if (open == n) {
-                acc.Append(")");
-                dfs(open, close+1);
-                acc.Length--; // remove the last char
+            if(close < open) {
+                seq.Append(")");
+                Dfs(open, close + 1);
+                seq.Length -= 1;
             }
-            else if (open == close) {
-                acc.Append("(");
-                dfs(open+1, close);
-                acc.Length--; 
-            }
-            else {
-                acc.Append("(");
-                dfs(open+1, close);
-                acc.Length--;            
-                    
-                acc.Append(")");
-                dfs(open, close+1);
-                acc.Length--;  
-            }
+            
         }
+
+        Dfs(0, 0);
+
+        return result;
     }
 }
