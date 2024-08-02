@@ -1,3 +1,6 @@
+// https://leetcode.com/problems/combination-sum/description/
+// https://www.youtube.com/watch?v=GBKI9VSKdGg
+
 public class CombinationSumSolution {
     IList<IList<int>> result = new List<IList<int>>();
     public IList<IList<int>> CombinationSum(int[] candidates, int target) {

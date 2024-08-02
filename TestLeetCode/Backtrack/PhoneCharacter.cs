@@ -14,19 +14,19 @@ public class LetterCombinationsSolution {
             {'9', "wxyz"}
         };
 
-        void Backtrack(int i, string curStr) {
+        void Helper(int i, string curStr) {
             if (curStr.Length == digits.Length) {
                 res.Add(curStr);
                 return;
             }
             foreach (char c in digitToChar[digits[i]]) {
                 // The reason we don't need to remove or reduce i is that these are passed in by value
-                Backtrack(i + 1, curStr + c);
+                Helper(i + 1, curStr + c);
             }
         }
 
         if (!string.IsNullOrEmpty(digits)) {
-            Backtrack(0, "");
+            Helper(0, "");
         }
 
         return res;

@@ -1,17 +1,4 @@
-// Wrong approach:
-public class IsValidBSTSolutionWrong {
-    public bool IsValidBST(TreeNode root) {
-        if (root == null) {
-            return true;
-        }
-
-        if (root.left != null && root.left.val >= root.val) { return false; }
-        if (root.right != null && root.right.val <= root.val) { return false; }
-
-        return IsValidBST(root.left) && IsValidBST(root.right);
-    }
-}
-
+// https://leetcode.com/problems/validate-binary-search-tree/description/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -25,6 +12,7 @@ public class IsValidBSTSolutionWrong {
  *     }
  * }
  */
+ 
 public class IsValidBSTSolution {
     public bool IsValidBST(TreeNode root) {
         if (root == null) {
@@ -42,5 +30,19 @@ public class IsValidBSTSolution {
 
         return IsValid(root.left, min, Math.Min(root.val, max)) 
         && IsValid(root.right, Math.Max(root.val, min),  max);
+    }
+}
+
+// Wrong approach:
+public class IsValidBSTSolutionWrong {
+    public bool IsValidBST(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+
+        if (root.left != null && root.left.val >= root.val) { return false; }
+        if (root.right != null && root.right.val <= root.val) { return false; }
+
+        return IsValidBST(root.left) && IsValidBST(root.right);
     }
 }
