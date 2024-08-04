@@ -11,7 +11,7 @@ public class TreeNode
     }
 }
 
-public class Solution
+public class RightSideViewSolution
 {
     public IList<int> RightSideView(TreeNode root)
     {

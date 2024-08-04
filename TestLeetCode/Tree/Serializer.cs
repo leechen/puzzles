@@ -8,7 +8,7 @@
  * }
  */
 
-public class Codec
+public class CodecSolution
 {
     private List<string> encodedList { get; set; }
 

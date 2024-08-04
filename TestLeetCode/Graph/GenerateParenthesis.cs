@@ -1,6 +1,8 @@
 // https://leetcode.com/problems/generate-parentheses/description/
 // can be viewed as backtrack or stack but it is essentially DFS
 
+using System.Text;
+
 public class GenerateParenthesisSolution {
     public IList<string> GenerateParenthesis(int n) {
         var result = new List<string>();

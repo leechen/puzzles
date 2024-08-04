@@ -15,8 +15,6 @@ using System;
 // Sample output - > 
 //     - check for 4 or 0 should return true
 // Check for 5 should return false
-using System.Collections;
-using System.Collections.Generic;
 
 class RoleRelation {
     public int To;
@@ -66,20 +64,6 @@ class RoleChecker {
         return false;
     }
 }
-class Solution
-{
-
-    static void Main(string[] args)
-    {
-        for (var i = 0; i < 5; i++)
-        {
-            Console.WriteLine("Hello, World");
-        }
-    }
-
-}
-
-
 // Your previous Plain Text content is preserved below:
 
 // This is just a simple shared plaintext pad, with no execution capabilities.

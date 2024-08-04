@@ -2,6 +2,19 @@ namespace TestLeetCode;
 
 public class UnitTest1
 {
+    public int Add(int x) {
+        if (x == 0) { return 0; }
+        return x + Add(x-1);
+    }
+
+    [Fact]
+    public void TestAdd()
+    {
+        var result = Add(5);
+        Assert.True(result == 15);
+    }
+        
+
     [Fact]
     public void Test1()
     {
