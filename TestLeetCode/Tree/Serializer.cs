@@ -25,6 +25,7 @@ public class CodecSolution
                 return;
             }
 
+            // make it a string by concate with ""
             encodedList.Add(root.val + "");
             dfs(root.left);
             dfs(root.right);

@@ -18,16 +18,16 @@
 public class LengthOfLongestSubstringSolution {
     public int LengthOfLongestSubstringV2(string s) {
         HashSet<char> charSet = new HashSet<char>();
-        int l = 0;
+        int left = 0;
         int res = 0;
 
-        for (int r = 0; r < s.Length; r++) {
-            while (charSet.Contains(s[r])) {
-                charSet.Remove(s[l]);
-                l++;
+        for (int right = 0; right < s.Length; right++) {
+            while (charSet.Contains(s[right])) {
+                charSet.Remove(s[left]);
+                left++;
             }
-            charSet.Add(s[r]);
-            res = Math.Max(res, r - l + 1);
+            charSet.Add(s[right]);
+            res = Math.Max(res, right - left + 1);
         }
 
         return res;
