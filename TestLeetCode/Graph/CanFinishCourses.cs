@@ -47,6 +47,8 @@ public class CanFinishCoursesSolution {
         // Step 2: go over all node and check for loops.
         // If no loop, add to canComplete set.
         // Else, just return false.
+        // why go over all nodes? b/c nodes maybe disconnected and 
+        // some sub-gruop may contains loop
         for (int course=0; course<numCourses; course++)
         {
             if (hasCycle(course))

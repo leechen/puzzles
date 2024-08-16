@@ -8,6 +8,14 @@ public class UnitTest1
     }
 
     [Fact]
+    public void TestSpiralOrder()
+    {
+        var result = Add(5);
+        Assert.True(result == 15);
+    }
+        
+
+    [Fact]
     public void TestAdd()
     {
         var result = Add(5);
