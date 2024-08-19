@@ -18,8 +18,8 @@ public class MaxSubArraySolution {
             foreach (int x in array)
             {
                 curSum += x;
-                if (curSum > curMax) curMax = curSum;
-                if (curSum < 0) curSum = 0;
+                if (curSum > curMax) { curMax = curSum; }
+                if (curSum < 0) { curSum = 0; }
             }
 
             return curMax;        

@@ -1,3 +1,5 @@
+// https://www.lintcode.com/problem/178/
+// 
 public class ValidTreeSolution {
     public bool ValidTree(int n, int[][] edges) {
         if (n == 0) {
@@ -16,27 +18,20 @@ public class ValidTreeSolution {
             adj[n2].Add(n1);
         }
 
-        var visit = new HashSet<int>();
+        var visited = new HashSet<int>();
 
-        // Step 2: Depth-First Search (DFS) to check for cycles and connectivity
-        bool Dfs(int node, int parent) {
-            if (visit.Contains(node)) {
-                return false;
-            }
-
-            visit.Add(node);
-            foreach (var neighbor in adj[node]) {
-                if (neighbor == parent) {
-                    continue;
-                }
-                if (!Dfs(neighbor, node)) {
-                    return false;
-                }
+        // Step 2: Depth-First Search (DFS) to check for cycles
+        bool IsAcyclic(int node, int parent) {
+            visited.Add(node);
+            foreach (var neighbor in adj[node])
+            {
+                if (neighbor == parent) { continue; }
+                if (visited.Contains(neighbor) || !IsAcyclic(neighbor, node)) { return false; }
             }
             return true;
         }
 
         // Check if the graph is connected and acyclic
-        return Dfs(0, -1) && visit.Count == n;
+        return IsAcyclic(0, -1) && visited.Count == n;
     }
 }

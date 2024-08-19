@@ -3,8 +3,7 @@ public class NumIslandsSolution {
         var m = grid.Length;
         var n = grid[0].Length;
         var visited = new bool[m, n];
-        var numIslands = 0;
-        
+        var numIslands = 0;        
         
         void dfs(int i, int j, char[][] grid) {
             if(i < 0 || i >=m) return;

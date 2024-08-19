@@ -1,5 +1,14 @@
 // https://leetcode.com/problems/rotting-oranges/description/
 // https://www.youtube.com/watch?v=y704fEOx0s0
+// You are given an m x n grid where each cell can have one of three values:
+
+// 0 representing an empty cell,
+// 1 representing a fresh orange, or
+// 2 representing a rotten orange.
+// Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten.
+
+// Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.
+
 // Multiple origin BFS (DSF will not work)
 public class OrangesRottingSolution {
   public int OrangesRotting(int[][] grid)
@@ -7,16 +16,18 @@ public class OrangesRottingSolution {
             if (grid == null || grid[0].Length == 0)
                 return 0;
 
-            int r = grid.Length, c = grid[0].Length, fresh = 0, time = 0;
+            int rows = grid.Length, cols = grid[0].Length, fresh = 0, time = 0;
 
             Queue<(int, int)> q = new Queue<(int, int)>();
 
-            for (int i = 0; i < r; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < c; j++)
+                for (int j = 0; j < cols; j++)
                 {
                     if (grid[i][j] == 1)
+                    {
                         fresh++;
+                    }
                     else if (grid[i][j] == 2)
                     {
                         q.Enqueue((i, j));
@@ -35,12 +46,13 @@ public class OrangesRottingSolution {
                 for (int i = 0; i < size; i++)
                 {
                     var curr = q.Dequeue();
-                    for (int j = 0; j < 4; j++)
+                    // Go over 4 directions
+                    for (int j = 0; j < dir.Length; j++)
                     {
                         int row = curr.Item1 + dir[j, 0];
                         int col = curr.Item2 + dir[j, 1];
 
-                        if (row >= 0 && row < r && col >= 0 && col < c && grid[row][col] == 1)
+                        if (row >= 0 && row < rows && col >= 0 && col < cols && grid[row][col] == 1)
                         {
                             grid[row][col] = 2;
                             q.Enqueue((row, col));

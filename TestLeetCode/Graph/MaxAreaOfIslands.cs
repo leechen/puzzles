@@ -1,7 +1,6 @@
 public class MaxAreaOfIslandSolution {
     public int MaxAreaOfIsland(int[][] grid) {
-        if (grid == null || grid.Length == 0) { return 0; }
-        if (grid[0].Length == 0) { return 0; }
+        if (grid == null || grid.Length == 0 || grid[0].Length == 0) { return 0; }
 
         int length = grid.Length;
         int width = grid[0].Length;
@@ -12,12 +11,10 @@ public class MaxAreaOfIslandSolution {
         }
 
         int max = 0;
-        int cur = 0;
-
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < width; j++) {
                 if (!visited[i][j] && grid[i][j] == 1) {
-                    cur = dfs(grid, visited, i, j);
+                    int cur = dfs(grid, visited, i, j);
                     max = Math.Max(max, cur);
                 }
             }        

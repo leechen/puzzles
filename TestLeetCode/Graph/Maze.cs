@@ -24,78 +24,40 @@ entrance -> + + + + 0 0 0
             0 0 1 + 1 0 1
             1 1 1 + + + + -> exit
  */
-
-public class Cordinate : IEqualityComparer<Cordinate> {
-    public Cordinate(int x, int y) {
-        X = x;
-        Y= y;
-    }
-    public int X;
-    public int Y;
-
-    public bool Equals(Cordinate? x, Cordinate? y)
-    {
-        return x?.X == y?.X && y?.Y == y?.Y;
-    }
-
-    public int GetHashCode([DisallowNull] Cordinate obj)
-    {
-        return obj.X * 263 + obj.Y;
-    }
-}
-
 class MazeSolution
 {
-    public bool HasPath(int[,] maze, out IList<Cordinate> path) {
-        var visited = new HashSet<Cordinate>();
-        var start = new Cordinate(0, 0);
-        var len = maze.GetLength(0);
-        var wid = maze.GetLength(1);
+    /**
+        * @param maze: the maze
+        * @param start: the start
+        * @param destination: the destination
+        * @return: whether the ball could stop at the destination
+        */
+    public bool HasPath(int[][] maze, int[] start, int[] destination) {
+        if (maze == null || maze.Length == 0 || maze[0].Length == 0) { return false; }
+        int rows = maze.Length;
+        int cols = maze[0].Length;
+        bool[][] visited = new bool[rows][];
 
-        var end = new Cordinate(len, wid);
-        path = new List<Cordinate>();
-
-
-        bool Helper(Cordinate cur, IList<Cordinate> path) {
-            if (visited.Contains(cur)) { return false; }
-
-            visited.Add(cur); //0,0, 1,0
-
-            if (cur == end) { // 6,6
-                path.Add(cur);
-                return true;
-            }
-
-            var x = cur.X;
-            var y = cur.Y;
-            if (maze[x,y] == 1) {
-                return false;
-            }
-
-            if (x+1 < len && Helper(new Cordinate(x+1, y), path)) {
-                path.Add(cur);
-                return true;
-            }
-            if (x-1 > 0 && Helper(new Cordinate(x-1, y), path)) {
-                path.Add(cur);
-                return true;
-            }  
-            if (y+1 < wid && Helper(new Cordinate(x, y+1), path)) {
-                path.Add(cur);
-                return true;
-            } 
-            if (y-1 > 0 && Helper(new Cordinate(x, y-1), path)) {
-                path.Add(cur);
-                return true;                
-            }
-            return false;
+        for (int i = 0; i < rows; i++)
+        {
+            visited[i] = new bool[cols];
         }
 
-        Helper(start, path);
+        bool HasPathHelper(int i, int j, int[] e) {                
+            if (i < 0 || i >= rows) {return false;}
+            if (j < 0 || j >= cols) { return false; }
+            if (visited[i][j]) { return false; }
+            visited[i][j] = true;
+            if (i == e[0] && j == e[1]) { return true; }
+            if (maze[i][j] == 1) { return false; }
+            return HasPathHelper(i-1, j, e) || HasPathHelper(i+1, j, e) 
+            || HasPathHelper(i, j-1, e) || HasPathHelper(i, j+1, e);
+        }
 
-        return path.Any();
+        return HasPathHelper(start[0], start[1], destination);
     }
 }
+
 
 
 // Your previous Plain Text content is preserved below:

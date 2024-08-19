@@ -6,6 +6,7 @@ public class ReverseListSolution
 
         while (curr != null)
         {
+            // This is the temperary variable
             var nxt = curr.next;
             curr.next = prev;
             prev = curr;
@@ -14,7 +15,6 @@ public class ReverseListSolution
         return prev;
     }
 }
-
 
 public class ReverseListRecursiveSolution
 {
