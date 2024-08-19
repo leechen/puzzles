@@ -91,10 +91,20 @@ public class UnitTest1
     }
 
     [Fact]
-    public void TestDictionary()
+    public void TestPermute()
     {
-        var dict = new Dictionary<char, int>();
-        dict['a'] = 1;
-        dict['b']++;
+        var sol = new PermuteSolution();
+        var input = new int[3] {1, 2, 3};
+        var res = sol.Permute2(input);
+
+    }
+
+    [Fact]
+    public void TestSubsetsSolution()
+    {
+        var sol = new SubsetsSolution();
+        var input = new int[3] {1, 2, 3};
+        var res = sol.Subsets(input);
+        Assert.True(res.Count == 8);
     }
 }

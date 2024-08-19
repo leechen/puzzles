@@ -12,6 +12,8 @@ public class CombinationSumSolution {
         
             if(total > target || index >= candidates.Length) return;
             
+            // This is very similar to the power subset, two paths to explore: 
+            // include current element or not
             path.Add(candidates[index]);
             backtrack(index, 
                     path, 

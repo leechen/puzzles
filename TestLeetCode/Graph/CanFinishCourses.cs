@@ -22,16 +22,16 @@ public class CanFinishCoursesSolution {
             }
         }
         
-        var visited = new HashSet<int>();
+        var visiting = new HashSet<int>();
         var canComplete = new HashSet<int>();
 
         bool hasCycle(int course)
         {
             if (canComplete.Contains(course)) { return false; } 
-            // if we visit a visited node again, then loop exist
-            if (visited.Contains(course)) { return true; }
+            // if we visit a visiting node again, then loop exist
+            if (visiting.Contains(course)) { return true; }
 
-            visited.Add(course);
+            visiting.Add(course);
 
             if (reqMap.ContainsKey(course))
             {
@@ -40,7 +40,7 @@ public class CanFinishCoursesSolution {
                     if (hasCycle(dep)) { return true; }
                 }
             }
-            visited.Remove(course);
+            visiting.Remove(course);
             return false;
         }
 
