@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
 
 public class MinStack {
 
     private List<int> stack;
     private List<int> min;
 
-    /** Initialize your data structure here. */
+    /** Use a List to implement stack make sense here */
     public MinStack() {
         stack = new List<int>();
         min = new List<int>();

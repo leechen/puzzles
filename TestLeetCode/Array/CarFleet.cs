@@ -26,6 +26,7 @@ public class CarFleetSolution2 {
             int spd = car.Speed;
             double time = (double)(target - pos) / spd;
 
+            // Check this car can reach the previous car
             if (times.Count > 0 && time <= times[times.Count - 1]) {
                 continue;
             }

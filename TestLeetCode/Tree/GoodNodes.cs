@@ -25,8 +25,10 @@ public class GoodNodesSolution {
         if (root == null) { return 0; }
 
         if (root.val >= pathMax) {
+            // include me
             return 1 + countGoodNodes(root.left, root.val) + countGoodNodes(root.right, root.val);
         }
+        // don't include me
         return countGoodNodes(root.left, pathMax) + countGoodNodes(root.right, pathMax);    
     }
 }
