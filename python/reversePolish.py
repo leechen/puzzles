@@ -1,3 +1,6 @@
+from typing import List
+
+
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
         """
@@ -20,9 +23,9 @@ class Solution:
                     case '*':
                         val = op1 * op2
                     case '/':
-                        val = op2/op1
-                stack.append(int(val))
+                        quotient = abs(op2) // abs(op1)
+                        val = -quotient if (op2 < 0) != (op1 < 0) else quotient
+                stack.append(val)
             else:
                 stack.append(int(t))
         return stack.pop()
-        

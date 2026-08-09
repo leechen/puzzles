@@ -26,6 +26,9 @@ class Solution:
 
 class Solution2:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+
         ROWS, COLS = len(grid), len(grid[0])
         visit = set()
 

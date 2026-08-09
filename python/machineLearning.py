@@ -1,52 +1,63 @@
-""" /*
-Question
-You're analyzing a dataset of customer information, and you want to identify the customers who are most likely to churn 
-(i.e., stop doing business with the company). The dataset contains the following columns:
-customer_id (unique identifier for each customer)
-age (customer's age)
-tenure (number of months the customer has been with the company)
-monthly_spend (average monthly spend of the customer)
-churn (binary indicator: 1 if the customer has churned, 0 otherwise)
-Task
-Train a simple logistic regression model to predict the probability of a customer churning based on their age, tenure, and monthly_spend.
- Then, use the model to identify the top 10 customers with the highest predicted probability of churning.
-Assumptions
-You can use a Python library like scikit-learn to train the logistic regression model.
-You have a basic understanding of logistic regression and its assumptions.
-Please respond with your approach and any relevant code or pseudo-code
-(Note: I'll provide guidance and hints as needed, just like before!) """
+"""Train a logistic regression model and rank customers by churn risk."""
 
+from typing import Final
+
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report
 
-# Split data into training and testing sets (30% for training)
-train_data, test_data = train_test_split(df, test_size=0.3, random_state=42)
 
-# Scale input features
-scaler = StandardScaler()
-train_data[['age', 'tenure', 'monthly_spend']] = scaler.fit_transform(train_data[['age', 'tenure', 'monthly_spend']])
-test_data[['age', 'tenure', 'monthly_spend']] = scaler.transform(test_data[['age', 'tenure', 'monthly_spend']])
+FEATURE_COLUMNS: Final = ["age", "tenure", "monthly_spend"]
+REQUIRED_COLUMNS: Final = ["customer_id", *FEATURE_COLUMNS, "churn"]
 
-# Train logistic regression model
-model = LogisticRegression()
-model.fit(train_data[['age', 'tenure', 'monthly_spend']], train_data['churn'])
 
-# Evaluate model performance on testing data
-y_pred = model.predict(test_data[['age', 'tenure', 'monthly_spend']])
-print("Accuracy:", accuracy_score(test_data['churn'], y_pred))
-print("Classification Report:")
-print(classification_report(test_data['churn'], y_pred))
+def rank_churn_risk(
+    data: pd.DataFrame,
+    top_n: int = 10,
+    test_size: float = 0.3,
+    random_state: int = 42,
+) -> pd.DataFrame:
+    """Return the customers with the highest modeled churn probabilities.
 
-# Predict probabilities for the testing data
-y_result = model.predict_proba(test_data[['age', 'tenure', 'monthly_spend']])
+    A train/test split is used to keep model training representative of the
+    original exercise. The fitted model then ranks all supplied customers.
+    The input DataFrame is never modified.
+    """
+    missing = [column for column in REQUIRED_COLUMNS if column not in data.columns]
+    if missing:
+        raise ValueError(f"Missing required columns: {', '.join(missing)}")
+    if top_n <= 0:
+        raise ValueError("top_n must be greater than zero")
+    if not 0 < test_size < 1:
+        raise ValueError("test_size must be between zero and one")
 
-# Get the probability of the positive class (churn=1)
-prob_churn = y_result[:, 1]
+    churn_values = set(data["churn"].dropna().unique())
+    if churn_values != {0, 1}:
+        raise ValueError("churn must contain both binary classes 0 and 1")
 
-# Sort by probability in descending order and get top 10
-top_10 = test_data.iloc[prob_churn.argsort()[-10:]].copy()
+    features = data[FEATURE_COLUMNS]
+    labels = data["churn"]
+    train_features, _, train_labels, _ = train_test_split(
+        features,
+        labels,
+        test_size=test_size,
+        random_state=random_state,
+        stratify=labels,
+    )
 
-# Add the predicted probability to the top 10 DataFrame
-top_10['prob_churn'] = prob_churn[prob_churn.argsort()[-10:]]
+    scaler = StandardScaler()
+    scaled_train_features = scaler.fit_transform(train_features)
+    model = LogisticRegression(random_state=random_state)
+    model.fit(scaled_train_features, train_labels)
+
+    churn_class_index = list(model.classes_).index(1)
+    ranked = data.copy(deep=True)
+    ranked["prob_churn"] = model.predict_proba(scaler.transform(features))[
+        :, churn_class_index
+    ]
+    return (
+        ranked.sort_values("prob_churn", ascending=False, kind="stable")
+        .head(top_n)
+        .reset_index(drop=True)
+    )

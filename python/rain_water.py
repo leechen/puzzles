@@ -4,6 +4,9 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
+        if not height:
+            return 0
+
         length = len(height)
         leftMax, rightMax = height[0], height[length-1]
         left = 0
@@ -28,5 +31,9 @@ class Solution(object):
 
         return res
     
-sol = Solution()
-res = sol.trap([0,1,0,2,1,0,1,3,2,1,2,1])
+def main() -> None:
+    print(Solution().trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
+
+
+if __name__ == "__main__":
+    main()

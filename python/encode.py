@@ -14,27 +14,29 @@ class Solution:
     @param: str: A string
     @return: decodes a single string to a list of strings
     """
-    def decode(self, str):
+    def decode(self, encoded):
         # write your code here
         res = []
         cur = ""
-        l = len(str)
+        l = len(encoded)
         i = 0
         while i < l:
             j = i
-            while str[j] != '$':
+            while encoded[j] != '$':
                 j += 1
-            length = int(str[i:j])
-            cur = str[j+1:j+length+1]
+            length = int(encoded[i:j])
+            cur = encoded[j+1:j+length+1]
             res.append(cur)
             i = j+length+1
 
         return res
 
-sol = Solution()
-mid = sol.encode(["lint","code","love","you"])
+def main() -> None:
+    solution = Solution()
+    encoded = solution.encode(["lint", "code", "love", "you"])
+    print(encoded)
+    print(solution.decode(encoded))
 
-print(mid)
-res = sol.decode(mid)
 
-print(res)
+if __name__ == "__main__":
+    main()

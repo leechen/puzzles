@@ -16,10 +16,7 @@ class Solution:
             return self.lowestCommonAncestor(root.right, p , q)
         if p.val < root.val and q.val < root.val:
             return self.lowestCommonAncestor(root.left, p, q)
-        else:
-            return root
-
-        return self.lowestCommonAncestor(root, p, q)
+        return root
 
     def lowestCommonAncestorIter(self, root, p, q):
         """
