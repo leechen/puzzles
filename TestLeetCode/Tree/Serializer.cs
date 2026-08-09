@@ -32,7 +32,6 @@ public class CodecSolution
         }
 
         dfs(root);
-        Console.WriteLine(string.Join(",", encodedList));
         return string.Join(",", encodedList);
     }
 
@@ -46,6 +45,7 @@ public class CodecSolution
         {
             if (nodesArray[index] == "N")
             {
+                // This index change is needed (disregard IDE warning!)
                 index++;
                 return null;
             }

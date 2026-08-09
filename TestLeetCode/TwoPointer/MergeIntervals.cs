@@ -5,7 +5,7 @@ public class MergeSolution
         if (intervals.Length == 0) return new int[0][];
 
         intervals = intervals.OrderBy(x => x[0]).ToArray();
-        List<int[]> res = new List<int[]> { intervals[0] };
+        var res = new List<int[]> { intervals[0] };
 
         foreach (var interval in intervals.Skip(1))
         {
@@ -19,7 +19,7 @@ public class MergeSolution
             }
             else
             {
-                res.Add(new int[] { start, end });
+                res.Add([start, end]);
             }
         }
 
