@@ -218,6 +218,14 @@ rcf/
 AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
 _pkginfo.txt
 *.appx
 *.appxbundle

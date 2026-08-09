@@ -29,5 +29,9 @@ class Solution:
         helper(0, 0, acc)
         return res
     
-sol = Solution()
-res = sol.generateParenthesis(3)
+def main() -> None:
+    print(Solution().generateParenthesis(3))
+
+
+if __name__ == "__main__":
+    main()

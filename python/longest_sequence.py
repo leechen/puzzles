@@ -23,6 +23,9 @@ class Solution(object):
         
         return localMax
     
-sol = Solution()
-res = sol.longestConsecutive([100,4,200,1,3,2])
-print(res)
+def main() -> None:
+    print(Solution().longestConsecutive([100, 4, 200, 1, 3, 2]))
+
+
+if __name__ == "__main__":
+    main()

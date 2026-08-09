@@ -13,7 +13,7 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
-        if not root or not q or not q:
+        if not root or not p or not q:
             return None
         if root.val == p.val or root.val == q.val:
             return root

@@ -1,28 +1,28 @@
-import math
+"""Small, executable demonstration of basic Python control flow and lists."""
 
-n = 3
-if n < 0:
-    print('negative')
-elif n > 2:
-    print('n>2')
-else:
-    print('0<n<2')
 
-# while n < 5:
-#     print(n)
-#     n += 1
+def describe_number(number: int) -> str:
+    if number < 0:
+        return "negative"
+    if number > 2:
+        return "n>2"
+    return "0<n<2"
 
-# for i in range(5,1,-1):
-#     print(i)
 
-print(float("inf"))
+def main(number: int = 3) -> None:
+    print(describe_number(number))
+    print(float("inf"))
 
-arr = [1, 2 ,3]
-arr.append(4)
-print(arr)
-arr.pop()
-print(arr)
-arr.pop(0)
-print(arr)
-arr.insert(1, 8)
-print(arr)
+    values = [1, 2, 3]
+    values.append(4)
+    print(values)
+    values.pop()
+    print(values)
+    values.pop(0)
+    print(values)
+    values.insert(1, 8)
+    print(values)
+
+
+if __name__ == "__main__":
+    main()
