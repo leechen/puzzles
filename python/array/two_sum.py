@@ -1,8 +1,13 @@
 class TwoSum:
-    def two_sum(self, numbers: list[int], target: int) -> list[int] | None:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
         seen = {}
-        for index, value in enumerate(numbers):
-            if target - value in seen:
-                return [seen[target - value], index]
-            seen[value] = index
-        return None
+
+        for i, n in enumerate(nums):
+            complement = target - n
+
+            if complement in seen:
+                return [seen[complement], i]
+
+            seen[n] = i
+
+        return []
