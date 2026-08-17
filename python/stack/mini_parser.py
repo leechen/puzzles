@@ -1,9 +1,15 @@
-# """
-# This is the interface that allows for creating nested lists.
-# You should not implement it, or speculate about its implementation
-# """
+"""Deserialize a nested-integer string without recursion."""
+
+import unittest
+
+
 class NestedInteger:
-    def __init__(self, value=None):
+    """Local implementation of the interface supplied by LeetCode."""
+
+    def __init__(self, value: int | None = None) -> None:
+        self._integer: int | None
+        self._list: list[NestedInteger] | None
+
         if value is not None:
             self._integer = value
             self._list = None
@@ -23,62 +29,54 @@ class NestedInteger:
         self._integer = value
         self._list = None
 
-    def add(self, elem) -> None:
+    def add(self, elem: "NestedInteger") -> None:
         if self._list is None:
             self._list = []
             self._integer = None
         self._list.append(elem)
 
-    def getList(self):
+    def getList(self) -> list["NestedInteger"] | None:
         return self._list
 
-    def to_native(self):
-        """Helper to convert the NestedInteger structure to native Python primitives."""
+    def to_native(self) -> int | list[object]:
+        """Convert this object to native Python values for inspection and tests."""
         if self.isInteger():
             return self.getInteger()
+
         items = self.getList()
         return [child.to_native() for child in items] if items is not None else []
 
+
 class Solution:
     def deserialize(self, s: str) -> NestedInteger:
-        # Edge Case: Single standalone integer (no outer brackets)
-        if not s.startswith('['):
+        """Parse a valid nested-integer representation in O(n) time."""
+        if not s.startswith("["):
             return NestedInteger(int(s))
-        
-        stack = []
-        num_str = []
-        
+
+        stack: list[NestedInteger] = []
+        number_chars: list[str] = []
+
         for char in s:
-            if char == '[':
-                # Initialize new nested list boundary
-                new_list = NestedInteger()
-                stack.append(new_list)
-            elif char.isdigit() or char == '-':
-                # Accumulate multi-character integers (including negative sign)
-                num_str.append(char)
-            elif char in (',', ']'):
-                # Flush accumulated integer buffer into current list frame
-                if num_str:
-                    val = int("".join(num_str))
-                    stack[-1].add(NestedInteger(val))
-                    num_str.clear()
-                
-                # Close list boundary if closing bracket
-                if char == ']' and len(stack) > 1:
-                    completed_list = stack.pop()
-                    stack[-1].add(completed_list)
-                    
+            if char == "[":
+                stack.append(NestedInteger())
+            elif char.isdigit() or char == "-":
+                number_chars.append(char)
+            elif char in {",", "]"}:
+                if number_chars:
+                    value = int("".join(number_chars))
+                    stack[-1].add(NestedInteger(value))
+                    number_chars.clear()
+
+                if char == "]" and len(stack) > 1:
+                    completed = stack.pop()
+                    stack[-1].add(completed)
+
         return stack[0]
-
-
-import unittest
 
 
 class TestMiniParser(unittest.TestCase):
     def setUp(self):
         self.solver = Solution()
-
-    # --- Functional & Structural Conformance ---
 
     def test_single_standalone_positive_integer(self):
         result = self.solver.deserialize("324")
@@ -114,8 +112,6 @@ class TestMiniParser(unittest.TestCase):
         result = self.solver.deserialize(raw)
         self.assertEqual(result.to_native(), [[], [[]]])
 
-    # --- Boundary Values & Security Edge Cases ---
-
     def test_negative_integers_within_nested_arrays(self):
         raw = "[-1,-22,[-333,44]]"
         result = self.solver.deserialize(raw)
@@ -126,13 +122,17 @@ class TestMiniParser(unittest.TestCase):
         result = self.solver.deserialize(raw)
         self.assertEqual(result.to_native(), [0, [0, 0]])
 
+    def test_32_bit_integer_boundaries(self):
+        raw = "[-2147483648,2147483647]"
+        result = self.solver.deserialize(raw)
+        self.assertEqual(result.to_native(), [-2147483648, 2147483647])
+
     def test_deeply_nested_recursion_simulation(self):
-        """Simulates adversarial nested framing to verify stack stability."""
+        """Verify that parsing deeply nested input does not use recursion."""
         depth = 50
         raw = ("[" * depth) + "101" + ("]" * depth)
         result = self.solver.deserialize(raw)
-        
-        # Verify unrolling
+
         expected = 101
         for _ in range(depth):
             expected = [expected]
