@@ -6,56 +6,47 @@ class GraphNode:
 
 class GraphCodec:
     def serialize(self, node: GraphNode | None) -> str:
-        """Encodes a directed graph to an adjacency list string."""
         if not node:
             return ""
 
-        # Use a dict/list to guarantee insertion order
-        visited: dict[GraphNode, bool] = {}
-        ordered_nodes: list[GraphNode] = []
+        # Using dict as an ordered set: preserves exact DFS discovery order
+        visited: dict[GraphNode, None] = {}
 
         def dfs(curr: GraphNode) -> None:
-            visited[curr] = True
-            ordered_nodes.append(curr)
+            visited[curr] = None  # Inserts in discovery order with O(1) deduplication
             for neighbor in curr.neighbors:
                 if neighbor not in visited:
                     dfs(neighbor)
 
         dfs(node)
 
-        # Build entries in the deterministic order they were visited
-        adj_records: list[str] = []
-        for curr in ordered_nodes:
-            neighbor_ids = ",".join(str(nbr.val) for nbr in curr.neighbors)
-            adj_records.append(f"{curr.val}:{neighbor_ids}")
+        # Build entries directly from visited keys
+        adj_records = [
+            f"{curr.val}:{','.join(str(nbr.val) for nbr in curr.neighbors)}"
+            for curr in visited
+        ]
 
         return "|".join(adj_records)
 
     def deserialize(self, data: str) -> GraphNode | None:
-        """Decodes the serialized string back to the graph structure."""
         if not data:
             return None
 
         node_map: dict[int, GraphNode] = {}
         entries = data.split("|")
 
-        # Pass 1: Instantiate nodes
+        # Pass 1: Instantiate all GraphNode objects
         for entry in entries:
-            val_str, _ = entry.split(":")
-            val = int(val_str)
+            val = int(entry.split(":")[0])
             if val not in node_map:
                 node_map[val] = GraphNode(val)
 
-        # Pass 2: Connect neighbor pointers
+        # Pass 2: Connect neighbors
         for entry in entries:
             val_str, neighbors_str = entry.split(":")
             curr_node = node_map[int(val_str)]
-            
             if neighbors_str:
-                for nbr_str in neighbors_str.split(","):
-                    nbr_val = int(nbr_str)
-                    curr_node.neighbors.append(node_map[nbr_val])
+                curr_node.neighbors = [node_map[int(nbr)] for nbr in neighbors_str.split(",")]
 
-        # entries[0] is guaranteed to be the original root node
-        first_val = int(entries[0].split(":")[0])
-        return node_map[first_val]
+        # First entry is guaranteed to be the root node
+        return node_map[int(entries[0].split(":")[0])]
